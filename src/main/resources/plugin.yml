@@ -2,3 +2,12 @@ name: SimpleTags
 version: '${project.version}'
 main: com.whixard.simpletags.SimpleTags
 api-version: 1.19
+
+commands:
+    simpletags:
+        description: SimpleTags command
+        usage: /simpletags
+        aliases: [st]
+        permission: simpletags.about
+        permission-message: You do not have permission to use this command.
+        default: true
