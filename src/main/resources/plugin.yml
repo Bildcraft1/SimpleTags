@@ -11,3 +11,16 @@ commands:
         permission: simpletags.about
         permission-message: You do not have permission to use this command.
         default: true
+    tags:
+        description: Tags command
+        usage: /tags
+        aliases: [tag]
+        permission: simpletags.use
+        permission-message: You do not have permission to use this command.
+        default: true
+    streload:
+        description: Reloads the plugin
+        usage: /streload
+        permission: simpletags.reload
+        permission-message: You do not have permission to use this command.
+        default: true

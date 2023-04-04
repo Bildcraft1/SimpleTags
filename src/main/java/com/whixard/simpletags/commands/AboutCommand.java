@@ -1,7 +1,6 @@
 package com.whixard.simpletags.commands;
 
 import com.whixard.simpletags.SimpleTags;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,9 +16,9 @@ public class AboutCommand implements CommandExecutor {
                 // Get the version of the plugin from the main class
                 String version = SimpleTags.version;
                 // Send the player a message
-                player.sendMessage(Component.text("§7 Running §cSimpleTags §7v" + version + " by §cWhixard§7."));
+                player.sendMessage("§aSimpleTags v" + version + " by Whixard");
             } else {
-                player.sendMessage(Component.text("§cYou do not have permission to run this command."));
+                player.sendMessage("§cYou do not have permission to run this command");
             }
             return true;
         }
