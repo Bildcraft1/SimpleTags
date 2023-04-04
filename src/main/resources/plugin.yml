@@ -2,6 +2,8 @@ name: SimpleTags
 version: '${project.version}'
 main: com.whixard.simpletags.SimpleTags
 api-version: 1.19
+depend:
+    - PlaceholderAPI
 
 commands:
     simpletags:

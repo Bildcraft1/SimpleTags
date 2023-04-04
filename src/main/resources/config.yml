@@ -1,1 +1,8 @@
 config_version: 1
+
+tags:
+  coolguy:
+    name: Cool Guy
+    permission: simpletags.coolguy
+    tag: '&b[&fCool Guy&b]'
+    lore: '&7This guy is cool.'
