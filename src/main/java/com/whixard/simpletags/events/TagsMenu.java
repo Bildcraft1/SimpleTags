@@ -31,6 +31,16 @@ public class TagsMenu {
 
         // Create a button with a nametag as the icon for every tag contained in the config file
         for (String tag : SimpleTags.getPlugin().getConfig().getConfigurationSection("tags").getKeys(false)) {
+            // Check for the permssion to use the tag
+            if (SimpleTags.getPlugin().getConfig().getString("tags." + tag + ".permission") != null) {
+                if (!p.hasPermission(Objects.requireNonNull(SimpleTags.getPlugin().getConfig().getString("tags." + tag + ".permission")))) {
+                    continue;
+                } else {
+                    if (SimpleTags.getPlugin().isDebugEnabled()) {
+                        SimpleTags.getPlugin().getLogger().info("Player has permission to use tag " + tag);
+                    }
+                }
+            }
             // Get the lore name form the config and save it in a variable
             String name = SimpleTags.getPlugin().getConfig().getString("tags." + tag + ".name");
             String lore = SimpleTags.getPlugin().getConfig().getString("tags." + tag + ".lore");
@@ -44,18 +54,23 @@ public class TagsMenu {
                 Player player = (Player) event.getWhoClicked();
                 // Get the player's current name
                 String playerName = player.getDisplayName();
-                // Get the tag from the config
-                String tagToAdd = SimpleTags.getPlugin().getConfig().getString("tags." + tag + ".tag");
-                // Add the tag to the player's name
-                assert tagToAdd != null;
-                player.setDisplayName(ChatFormatter.format(tagToAdd + playerName));
-                // Close the GUI
-                player.closeInventory();
+                // save the selected tag in the database
+                SimpleTags.sql.updatePlayer(player.getUniqueId().toString(), tag);
             });
 
             // Add the button to your GUI
             tagsMenu.addButton(tagButton);
         }
+
+        SGButton removeTagButton = new SGButton(new ItemBuilder(Material.BARRIER).name(ChatFormatter.format("&cRemove Tag")).lore(ChatFormatter.format("&7Click to remove your tag")).build());
+
+        removeTagButton.setListener(event -> {
+            Player player = (Player) event.getWhoClicked();
+            SimpleTags.sql.updatePlayer(player.getUniqueId().toString(), "None");
+            player.closeInventory();
+        });
+
+        tagsMenu.addButton(removeTagButton);
 
         // Show the GUI
         p.openInventory(tagsMenu.getInventory());

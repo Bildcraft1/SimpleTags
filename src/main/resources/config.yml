@@ -1,8 +1,10 @@
 config_version: 1
 
+debug: false
+
 tags:
   coolguy:
     name: Cool Guy
     permission: simpletags.coolguy
-    tag: '&b[&fCool Guy&b]'
+    tag-format: '&b[&fCool Guy&b]'
     lore: '&7This guy is cool.'

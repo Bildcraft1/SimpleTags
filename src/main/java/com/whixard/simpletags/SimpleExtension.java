@@ -1,8 +1,11 @@
 package com.whixard.simpletags;
 
+import com.whixard.simpletags.tools.ChatFormatter;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class SimpleExtension extends PlaceholderExpansion {
 
@@ -34,7 +37,21 @@ public class SimpleExtension extends PlaceholderExpansion {
         }
 
         if (params.equals("tag")) {
-            return plugin.getConfig().getString("tag");
+            if (player == null) {
+                return null;
+            }
+            if (SimpleTags.sql.checkPlayer(player.getUniqueId().toString())) {
+                if (!Objects.equals(SimpleTags.sql.getTag(player.getUniqueId()), "None")) {
+                    String userTag = SimpleTags.sql.getTag(player.getUniqueId());
+                    String tagFormat = SimpleTags.getPlugin().getConfig().getString("tags." + userTag + ".tag-format");
+                    if (tagFormat == null) {
+                        return "";
+                    }
+                    return ChatFormatter.format(tagFormat);
+                } else {
+                    return "";
+                }
+            }
         }
 
         return null; // Placeholder is unknown by the Expansion
